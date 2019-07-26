@@ -1,19 +1,75 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Dimensions } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
+import { Platform } from '@unimodules/core';
+import ToDo from "./ToDo.js";
+
+const { height, width } = Dimensions.get("window");
 
 export default function App() {
+  state = {
+    newToDo: ""
+  };
+  
+  const { newToDo } = this.state;
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar barStyle="light-content"/>
+      <Text style={styles.title}>To Do!</Text>
+      <View style={styles.card}>
+        <TextInput style={styles.input} placeholder={"할 일"} value={newToDo} onChangeText={this._controlNewToDo} placeholderTextColor={"#999"} returnKeyType={"입력하기"}/>
+      </View>
+      <ScrollView>
+        <ToDo />
+      </ScrollView>
     </View>
   );
+  _controlNewToDo = text => {
+    this.setState({
+      newToDo: text
+    });
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f23657',
     alignItems: 'center',
-    justifyContent: 'center',
   },
+  title: {
+    color: "white",
+    fontSize: 30,
+    marginTop: 70,
+    fontWeight: "100",
+    marginBottom: 50
+  },
+  card: {
+    backgroundColor: "white",
+    flex: 1,
+    width: width - 25,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    // ...Platform.select({
+    //   ios: {
+    //     shadowColor: 'rgb(50, 50, 50)',
+    //     shadowOpacity: 0.5,
+    //     shadowRadius: 5,
+    //     shadowOffset: {
+    //       height: -1,
+    //       width: 0
+    //     },
+    //   },
+    //   android: {
+    //     elevation: 3
+    //   }
+    // })
+    elevation: 3
+  },
+  input: {
+    padding: 20,
+    borderBottomColor: "#bbb",
+    borderBottomWidth: 1,
+    fontSize: 25
+  }
 });
